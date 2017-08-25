@@ -15,13 +15,11 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./Figures/Visualize_Speed_Signs.png "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
+[image1]: ./Figures/Class_Hist.png "Sign Class Histogram"
+[image2]: ./Figures/Visualize_Speed_Signs.png "Speed Signs"
+[image3]: ./Figures/Learning_Rate.png "Validation Accuracy during Training"
+[image4]: ./Figures/Softmax_Web-Signs.png "Softmax Web Signs"
+
 
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
@@ -58,19 +56,7 @@ Here is an exploratory visualization of the data set. It is a bar chart showing 
 
 The figure below shows the original RGB image, the grayscale image, and the normalized grayscale image. PyPlot automatically displays images relative to their input ranges. This increases the contrast of many of the darker images in the data set. This also makes the gray and normalized images to appear the same
 
-![alt text][image1]
-
-As a last step, I normalized the image data because ...
-
-I decided to generate additional data because ... 
-
-To add more data to the the data set, I used the following techniques because ... 
-
-Here is an example of an original image and an augmented image:
-
-![alt text][image3]
-
-The difference between the original data set and the augmented data set is the following ... 
+![alt text][image2]
 
 
 ####2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
@@ -79,15 +65,21 @@ My final model consisted of the following layers:
 
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
+| Input         		| 32x32x1 Grayscale image   							| 
+| Convolution 3x3 filter	| 1x1 stride, same padding, outputs 32x32x16 	|
 | RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
+| Convolution 3x3 filter	| 1x1 stride, same padding, outputs 32x32x16 	|
+| RELU					|												|
+| Max pooling	      	| 2x2 stride,  outputs 16x16x32 				|
+| Convolution 3x3 filter	| 1x1 stride, same padding, outputs 16x16x32 	|
+| RELU					|												|
+| Convolution 3x3 filter	| 1x1 stride, same padding, outputs 16x16x32 	|
+| RELU					|												|
+| Max pooling	      	| 2x2 stride,  outputs 8x8x64 				|
+| Convolution 3x3 filter	| 1x1 stride, same padding, outputs 8x8x64 	|
+| RELU					|												|
+| Average pooling	      	| 8x8 stride,  outputs 1x1x64 				|
+| Fully connected		| outputs 43 classes        									|
  
 
 
