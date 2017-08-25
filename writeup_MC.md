@@ -61,96 +61,64 @@ The figure below shows the original RGB image, the grayscale image, and the norm
 
 ####2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
+My model architecture is based off of VGGNet. VGGNet only uses 3x3 filters in its convolutional layers. Research has shown that small spatial filters with large depths operate more efficiently in conv nets. Research has also shown that only one fully connected layer is needed. Additional FC layers expand the number of parameters without improving model performance. Testing my network confirmed this.
+
+ I used 2 max pooling layers in between my conv layers. This reduced the data spatially while increasing the depth.
+ 
+ An average pooling layer placed after my conv layers reduces the output to a 1x1. This has been found to be the most efficient method of feeding the FC layer.
+
 My final model consisted of the following layers:
 
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | Input         		| 32x32x1 Grayscale image   							| 
-| Convolution 3x3 filter	| 1x1 stride, same padding, outputs 32x32x16 	|
+| 1 Convolution 3x3 filter	| 1x1 stride, same padding, outputs 32x32x16 	|
 | RELU					|												|
-| Convolution 3x3 filter	| 1x1 stride, same padding, outputs 32x32x16 	|
+| 2 Convolution 3x3 filter	| 1x1 stride, same padding, outputs 32x32x16 	|
 | RELU					|												|
 | Max pooling	      	| 2x2 stride,  outputs 16x16x32 				|
-| Convolution 3x3 filter	| 1x1 stride, same padding, outputs 16x16x32 	|
+| 3 Convolution 3x3 filter	| 1x1 stride, same padding, outputs 16x16x32 	|
 | RELU					|												|
-| Convolution 3x3 filter	| 1x1 stride, same padding, outputs 16x16x32 	|
+| 4 Convolution 3x3 filter	| 1x1 stride, same padding, outputs 16x16x32 	|
 | RELU					|												|
 | Max pooling	      	| 2x2 stride,  outputs 8x8x64 				|
-| Convolution 3x3 filter	| 1x1 stride, same padding, outputs 8x8x64 	|
+| 5 Convolution 3x3 filter	| 1x1 stride, same padding, outputs 8x8x64 	|
 | RELU					|												|
 | Average pooling	      	| 8x8 stride,  outputs 1x1x64 				|
-| Fully connected		| outputs 43 classes        									|
- 
+| 6 Fully connected		| outputs 43 classes        									|
+
+####3. I trained my model based on the methods used by the LeNet lab. I used the Adam Optimizer, which is the current best practice method based on Stochastic Gradient Descent. My used a 1024 sample batch size, 100 epochs, 0.01 kear
 
 
-####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+| Hyperparameter         		|     Value	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| Batch Size         		| 100  							| 
+| Epochs| 100 	|
+| Learning Rate| 0.01 	|
+| Decay Rate| 0.04 	|
+| Weight Init SD| sqrt(2/n inputs) 	|
+| Dropout | 0.5|
 
-To train the model, I used an ....
 
-####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
+####4. 
 My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
-
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
-
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
+* validation set accuracy of 0.941
+* test set accuracy of 0.934
  
+I used an iterative approach to creating my architecture.
+
+I first used the LeNet lab since I knew the code for it worked. This achieved a ~0.90 validation accuracy and trained very quickly. I then created my own architecture based on VGGNet. I chose VGGNet because it performs very well and is easy to implement and understand. It uses only 3x3 convolutional filters. However, my model is much deeper than LeNet. This theoretically increases the complexity of image recognition of the network but also increases training time.
+
+I initially had diffculty getting my model to train. I found that this was because of improper weight initialization. Current best practice is to use sqrt(2/n) for standard deviation of the random normalized parameters where n is the number of inputs to a given layer. This got model to train properly.
+
+I then started playin around with constant learning rates and found the 0.1 was the highest I could go before the model wouldn't train at all.  I then applied exponential decay to reduce the learning rate during training. This allows faster training while preventing training to plateau.
+
+This brought my validation accuracy above the criteria to 0.941
 
 ###Test a Model on New Images
 
-####1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
+![alt text][image4]
 
-Here are five German traffic signs that I found on the web:
-
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
-
-The first image might be difficult to classify because ...
-
-####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
-
-Here are the results of the prediction:
-
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
-
-
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
-
-####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
-
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
-
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
-
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
-
-
-For the second image ... 
-
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-####1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
-
+My model correcty predicted 5 out of my 6 test images from the web. It was alsmost 100% certain for all the images, even for the incorrectly categorized one. The model likely has trouble classifying speed limit signs. It classified the 100 speed limit sign as 30. It makes sense that the model would have the most trouble here since the image details that distguish different speed signs is very small. However, it's surprising that softmax calculates such a high certainty for the 30 speed sign. I'm not sure what's going on here.
 
