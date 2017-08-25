@@ -105,6 +105,7 @@ I initially had diffculty getting my model to train. I found that this was becau
 I then started playin around with constant learning rates and found the 0.1 was the highest I could go before the model wouldn't train at all.  I then applied exponential decay to reduce the learning rate during training. This allows faster training while preventing training to plateau.
 
 ![alt text][image3]
+
 All the lines in the figure above use an intial learning rate of 0.01. However, they vary in decar rate. The blue has a decay rate of 0.4. This was the best setting and brought my validation accuracy above the criteria to 0.941.
 
 ### Test a Model on New Images
