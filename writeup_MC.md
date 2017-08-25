@@ -15,7 +15,7 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./Web-Signs/image_30.jpg "Visualization"
+[image1]: ./Figures/Visualize_Speed_Signs.png "Visualization"
 [image2]: ./examples/grayscale.jpg "Grayscaling"
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
 [image5]: ./examples/placeholder.png "Traffic Sign 2"
@@ -54,13 +54,11 @@ Here is an exploratory visualization of the data set. It is a bar chart showing 
 
 ###Design and Test a Model Architecture
 
-####1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
+####1. I preprocessed the images by converting them to grayscale first. This reduces the number of inputs to the network and significantly reduces training time. I then normalized the images to a mean of 0 and standard deviation of 1 based on the training data. This allows the weights in the network to operate effectively on their inputs.
 
-As a first step, I decided to convert the images to grayscale because ...
+The figure below shows the original RGB image, the grayscale image, and the normalized grayscale image. PyPlot automatically displays images relative to their input ranges. This increases the contrast of many of the darker images in the data set. This also makes the gray and normalized images to appear the same
 
-Here is an example of a traffic sign image before and after grayscaling.
-
-![alt text][image2]
+![alt text][image1]
 
 As a last step, I normalized the image data because ...
 
