@@ -12,16 +12,12 @@ The goals / steps of this project are the following:
 * Analyze the softmax probabilities of the new images
 * Summarize the results with a written report
 
-
 [//]: # (Image References)
 
 [image1]: ./Figures/Class_Hist.png "Sign Class Histogram"
 [image2]: ./Figures/Visualize_Speed_Signs.png "Speed Signs"
 [image3]: ./Figures/Learning_Rate.png "Validation Accuracy during Training"
 [image4]: ./Figures/Softmax_Web-Signs.png "Softmax Web Signs"
-
-
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
 
 ###Data Set Summary & Exploration
 
