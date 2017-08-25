@@ -21,22 +21,11 @@ The goals / steps of this project are the following:
 [image4]: ./Figures/Softmax_Web-Signs.png "Softmax Web Signs"
 
 
-## Rubric Points
-###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
-
----
-###Writeup / README
-
 ####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
-
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
 
 ###Data Set Summary & Exploration
 
-####1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
-
-I used the pandas library to calculate summary statistics of the traffic
-signs data set:
+####1. Data Summary
 
 * The size of training set is 34799
 * The size of the validation set is 4410
@@ -44,9 +33,9 @@ signs data set:
 * The shape of a traffic sign image is (32, 32, 3)
 * The number of unique classes/labels in the data set is 43
 
-####2. Include an exploratory visualization of the dataset.
+####2. Exploration
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
+Here is a hisogram of the data set seperated into sign classes. There is huge variation is the number of images for each class. I would think that a more even data set would train better.
 
 ![alt text][image1]
 
@@ -54,7 +43,9 @@ Here is an exploratory visualization of the data set. It is a bar chart showing 
 
 ####1. I preprocessed the images by converting them to grayscale first. This reduces the number of inputs to the network and significantly reduces training time. I then normalized the images to a mean of 0 and standard deviation of 1 based on the training data. This allows the weights in the network to operate effectively on their inputs.
 
-The figure below shows the original RGB image, the grayscale image, and the normalized grayscale image. PyPlot automatically displays images relative to their input ranges. This increases the contrast of many of the darker images in the data set. This also makes the gray and normalized images to appear the same
+The figure below shows the original RGB image, the grayscale image, and the normalized grayscale image. PyPlot automatically displays images relative to their input ranges. This increases the contrast of many of the darker images in the data set. This also makes the gray and normalized images to appear the same.
+
+Correcting the brightness and contrast of many of these images likely would have improved training.
 
 ![alt text][image2]
 
@@ -89,7 +80,6 @@ My final model consisted of the following layers:
 
 ####3. I trained my model based on the methods used by the LeNet lab. I used the Adam Optimizer, which is the current best practice method based on Stochastic Gradient Descent. My used a 1024 sample batch size, 100 epochs, 0.01 kear
 
-
 | Hyperparameter         		|     Value	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | Batch Size         		| 100  							| 
@@ -99,9 +89,9 @@ My final model consisted of the following layers:
 | Weight Init SD| sqrt(2/n inputs) 	|
 | Dropout | 0.5|
 
+####4. Results
 
 
-####4. 
 My final model results were:
 * validation set accuracy of 0.941
 * test set accuracy of 0.934
@@ -114,9 +104,10 @@ I initially had diffculty getting my model to train. I found that this was becau
 
 I then started playin around with constant learning rates and found the 0.1 was the highest I could go before the model wouldn't train at all.  I then applied exponential decay to reduce the learning rate during training. This allows faster training while preventing training to plateau.
 
-This brought my validation accuracy above the criteria to 0.941
+![alt text][image3]
+All the lines in the figure above use an intial learning rate of 0.01. However, they vary in decar rate. The blue has a decay rate of 0.4. This was the best setting and brought my validation accuracy above the criteria to 0.941.
 
-###Test a Model on New Images
+### Test a Model on New Images
 
 ![alt text][image4]
 
